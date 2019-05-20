@@ -7,11 +7,13 @@ body{
 h1, h2, h3, h4,
 strong{
     font-family: 'Special Elite', "Courier New", serif;
+    color: white;
 }
 
 
 h1{
     font-size: 5rem;
+
 }
 strong{
     font-size: 1.1em;
@@ -19,4 +21,17 @@ strong{
 
 .navbar-brand{
     height: auto;
+}
+.back-jumbo {
+    background-image: url('images/jumbo.jpg');
+    background-attachment: fixed;
+}
+
+a {
+    color: white;
+}
+.file-logo {
+    height : 74px;
+    width : 74px;
+    filter: grayscale(80%);
 }
