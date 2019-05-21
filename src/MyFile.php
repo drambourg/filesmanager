@@ -2,6 +2,13 @@
 
 class MyFile
 {
+    const MIMETYPEALLOWED= [
+        'text/csv',
+        'text/html',
+        'text/css',
+        'text/plain'
+        ];
+
     private $size;
     private $path;
 
@@ -50,6 +57,11 @@ class MyFile
         fwrite($file,$text);
         fclose($file);
         return file_get_contents($this->path);
+    }
+
+    public function  isEditable() : bool
+    {
+      return in_array(mime_content_type($this->path), self::MIMETYPEALLOWED);
     }
 
     public function delete()

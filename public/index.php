@@ -24,6 +24,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="assets/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/custom.css"/>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
     <title>FBI | X-Files archives</title>
 </head>
 <body class="bg-dark">
@@ -49,18 +50,30 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     $myFile = new MyFile($file);
                     ?>
                     <div class="card col-md-2 m-1 p-1 justify-content-center text-center border border-light bg-transparent">
-                        <img src="assets/images/file.png" class="card-img-top file-logo mx-auto" alt="<?= $file ?>">
-                        <div class="card-body">
-                            <p><a href="#"><?= $myFile->getPath() ?></a></p>
+                        <div class="card-header">
                             <p><?= $myFile->getHumanReadableSize() ?></p>
                         </div>
-                        <div class="card-footer">
-                            <form method="POST">
-                                <button type="submit" name="fileToDelete" class="btn btn-danger" value="<?= $myFile->getPath() ?>">Supprimer</button>
-                            </form>
-                            <form method="POST" action="editfile.php">
-                                <button type="submit" name="filepath" class="btn btn-success" value="<?= $myFile->getPath() ?>">Editer ...</button>
-                            </form>
+                        <img src="assets/images/file.png" class="card-img-top file-logo mx-auto" alt="<?= $file ?>">
+                        <div class="card-body">
+                            <p><?= $myFile->getPath() ?></p>
+
+                        </div>
+                        <div class="card-footer  border-0">
+                            <div class="row p-1 ">
+                                <div class="col-md-6">
+                                    <form method="POST" action="editfile.php" class="p-1 border-0">
+                                        <button type="submit" name="filepath" class="btn btn-success text-white-button w-100 p-1"
+                                                value="<?= $myFile->getPath() ?>" <?php if(!$myFile->isEditable()) : ?>disabled<?php endif ?>><i class='fas fa-pen'></i><p>Editer</p></button>
+                                    </form>
+                                </div>
+                                <div class="col-md-6">
+                                    <form method="POST" class="p-1 w-100">
+                                        <button type="submit" name="fileToDelete" class="btn btn-danger text-white-button w-100 p-1" value="<?= $myFile->getPath() ?>"><i class='far fa-trash-alt'></i><p>Jeter</p></button>
+                                    </form>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
                 <?php endforeach; ?>

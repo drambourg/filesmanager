@@ -26,6 +26,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="assets/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/custom.css"/>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
     <title>FBI | X-Files archives</title>
 </head>
 <body class="bg-dark">
@@ -47,12 +48,12 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
                     <img src="assets/images/file.png" class="card-img-top file-logo mx-auto" alt="<?= $myFile->getPath() ?>">
                     <form method="POST">
                         <div class="card-header">
-                            <p><?= $myFile->getPath() ?></p>
+                            <h3><?= $myFile->getPath() ?></h3>
                             <input id="filepath" name="filepath" type="hidden" value="<?= $myFile->getPath() ?>">
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="contentFile">Secret content</label>
+                                <label for="contentFile"><h4>Secret content</h4></label>
                                 <textarea class="form-control" id="contentFile" name="filecontent"
                                           rows="15"><?= $myFile->getContent() ?></textarea>
                             </div>
