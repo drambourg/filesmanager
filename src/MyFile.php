@@ -37,7 +37,10 @@ class MyFile
     }
 
 
-
+    public function delete()
+    {
+        unlink($this->getPath());
+    }
 
     function getHumanReadableSize($decimals = 2)
     {

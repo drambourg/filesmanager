@@ -3,14 +3,27 @@
 <?php
 require('../src/MyDirectory.php');
 require('../src/MyFile.php');
-$pathDirectory = 'files/' ?>
+$pathDirectory = 'files/';
+
+if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
+    $postData = $_POST;
+    var_dump($_POST);
+    if (isset($postData['fileToDelete'])) {
+        $myFile = new MyFile($postData['fileToDelete']);
+        $myFile->delete();
+        header('Location: index.php');
+    }
+}
+
+?>
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-      <link rel="stylesheet" href="assets/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/custom.css"/>
     <title>FBI | X-Files archives</title>
 </head>
@@ -29,24 +42,26 @@ $pathDirectory = 'files/' ?>
         </div>
         <div class="card-body">
             <div class="row justify-content-center">
-            <?php
-            $directory = new MyDirectory($pathDirectory);
-            $files = $directory->getFiles();
+                <?php
+                $directory = new MyDirectory($pathDirectory);
+                $files = $directory->getFiles();
 
-            foreach ($files as $file) :
-                $myFile = new MyFile($file);
-
-                ?>
-
-
-                <div class="card col-md-2 m-1 p-1 justify-content-center text-center border border-light bg-transparent">
-                    <img src="assets/images/file.png" class="card-img-top file-logo mx-auto" alt="<?= $file ?>">
-                    <div class="card-body">
-                        <p><a href="#"><?= $myFile->getPath() ?></a></p>
-                        <p><?= $myFile->getHumanReadableSize() ?></p>
+                foreach ($files as $file) :
+                    $myFile = new MyFile($file);
+                    ?>
+                    <div class="card col-md-2 m-1 p-1 justify-content-center text-center border border-light bg-transparent">
+                        <img src="assets/images/file.png" class="card-img-top file-logo mx-auto" alt="<?= $file ?>">
+                        <div class="card-body">
+                            <p><a href="#"><?= $myFile->getPath() ?></a></p>
+                            <p><?= $myFile->getHumanReadableSize() ?></p>
+                        </div>
+                        <div class="card-footer">
+                            <form method="POST">
+                                <button type="submit" name="fileToDelete" class="btn btn-danger" value="<?= $myFile->getPath() ?>">Supprimer</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
             </div>
         </div>
         <div class="card-footer">
