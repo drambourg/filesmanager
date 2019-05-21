@@ -36,6 +36,21 @@ class MyFile
         return filesize($this->path);
     }
 
+    /**
+     * @return mixed
+     */
+    public function getContent()
+    {
+        return file_get_contents($this->path);
+    }
+
+    public function setContent( $text)
+    {
+        $file= fopen($this->path,"w");
+        fwrite($file,$text);
+        fclose($file);
+        return file_get_contents($this->path);
+    }
 
     public function delete()
     {

@@ -7,11 +7,13 @@ $pathDirectory = 'files/';
 
 if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $postData = $_POST;
-    var_dump($_POST);
-    if (isset($postData['fileToDelete'])) {
-        $myFile = new MyFile($postData['fileToDelete']);
-        $myFile->delete();
-        header('Location: index.php');
+
+    $myFile = null;
+    if (isset($postData['filepath'])) {
+        $myFile = new MyFile($postData['filepath']);
+    }
+    if (isset($postData['filecontent']) && isset($myFile)) {
+        $myFile->setContent($postData['filecontent']);
     }
 }
 ?>
@@ -37,33 +39,29 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
 
     <div class="card bg-transparent border border-light">
         <div class="card-header">
-            <h3 class="text-uppercase">UFO's Activities report</h3>
+            <h3 class="text-uppercase">Edit a secret report</h3>
         </div>
         <div class="card-body">
             <div class="row justify-content-center">
-                <?php
-                $directory = new MyDirectory($pathDirectory);
-                $files = $directory->getFiles();
-
-                foreach ($files as $file) :
-                    $myFile = new MyFile($file);
-                    ?>
-                    <div class="card col-md-2 m-1 p-1 justify-content-center text-center border border-light bg-transparent">
-                        <img src="assets/images/file.png" class="card-img-top file-logo mx-auto" alt="<?= $file ?>">
+                <div class="card col-md-10 m-1 p-1 justify-content-center text-center border border-light bg-transparent">
+                    <img src="assets/images/file.png" class="card-img-top file-logo mx-auto" alt="<?= $myFile->getPath() ?>">
+                    <form method="POST">
+                        <div class="card-header">
+                            <p><?= $myFile->getPath() ?></p>
+                            <input id="filepath" name="filepath" type="hidden" value="<?= $myFile->getPath() ?>">
+                        </div>
                         <div class="card-body">
-                            <p><a href="#"><?= $myFile->getPath() ?></a></p>
-                            <p><?= $myFile->getHumanReadableSize() ?></p>
+                            <div class="form-group">
+                                <label for="contentFile">Secret content</label>
+                                <textarea class="form-control" id="contentFile" name="filecontent"
+                                          rows="15"><?= $myFile->getContent() ?></textarea>
+                            </div>
                         </div>
                         <div class="card-footer">
-                            <form method="POST">
-                                <button type="submit" name="fileToDelete" class="btn btn-danger" value="<?= $myFile->getPath() ?>">Supprimer</button>
-                            </form>
-                            <form method="POST" action="editfile.php">
-                                <button type="submit" name="filepath" class="btn btn-success" value="<?= $myFile->getPath() ?>">Editer ...</button>
-                            </form>
+                            <button type="submit" class="btn btn-danger">Update report</button>
                         </div>
-                    </div>
-                <?php endforeach; ?>
+                    </form>
+                </div>
             </div>
         </div>
         <div class="card-footer">
