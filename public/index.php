@@ -28,6 +28,9 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
     <title>FBI | X-Files archives</title>
 </head>
 <body class="bg-dark">
+<header>
+    <?php include ('_header.php') ?>
+</header>
 <div class="container-fluid p-0">
     <div class="jumbotron jumbotron-fluid back-jumbo">
         <div class="container">

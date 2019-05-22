@@ -5,6 +5,11 @@ require('../src/MyDirectory.php');
 require('../src/MyFile.php');
 $pathDirectory = 'files/';
 
+$updateSuccess = false;
+if (isset($_GET['up'])) {
+    $updateSuccess = true;
+};
+
 if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $postData = $_POST;
 
@@ -26,10 +31,22 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="assets/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/custom.css"/>
-    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css'
+          integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
     <title>FBI | X-Files archives</title>
 </head>
 <body class="bg-dark">
+<header>
+    <?php include('_header.php') ?>
+</header>
+<?php if ($updateSuccess) : ?>
+    <div class="alert alert-success alert-dismissible fade show alert-bg" role="alert">
+        <strong>Update succeeded</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+<?php endif ?>
 <div class="container-fluid p-0">
     <div class="jumbotron jumbotron-fluid back-jumbo">
         <div class="container">
@@ -45,8 +62,9 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST')) {
         <div class="card-body">
             <div class="row justify-content-center">
                 <div class="card col-md-10 m-1 p-1 justify-content-center text-center border border-light bg-transparent">
-                    <img src="assets/images/file.png" class="card-img-top file-logo mx-auto" alt="<?= $myFile->getPath() ?>">
-                    <form method="POST">
+                    <img src="assets/images/file.png" class="card-img-top file-logo mx-auto"
+                         alt="<?= $myFile->getPath() ?>">
+                    <form method="POST" action="editfile.php?up=true">
                         <div class="card-header">
                             <h3><?= $myFile->getPath() ?></h3>
                             <input id="filepath" name="filepath" type="hidden" value="<?= $myFile->getPath() ?>">

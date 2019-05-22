@@ -16,6 +16,10 @@ strong{
     font-size: 12px;
 }
 
+.alert-bg {
+    background-color: #328c51;
+    color: #193e26;
+}
 p {
     color: white;
 }
